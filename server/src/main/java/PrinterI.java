@@ -4,34 +4,62 @@ import java.net.*;
 
 class PrinterI implements Demo.Printer {
     public void printString(String s, com.zeroc.Ice.Current current) {
-        System.out.println("CONECTADOOO");
+        System.out.println("COMANDO DIGITADO:" + s);
         String[] parts2 = s.split(":");
         if (parts2.length >= 3) {
             String messagePart = parts2[2];
             if (s.equalsIgnoreCase("exit")) {
                 System.out.println("Goodbye!");
             }else if (s.endsWith("listifs")) {
+                System.out.println("------------------------------------------------------------------");
                 System.out.println("List of interfaces: " + getNetworkInterfaces());
-            } else if (s.endsWith("listports")) {
+                System.out.println("------------------------------------------------------------------");
+            } else if (messagePart.startsWith("listports")) {
+                System.out.println("------------------------------------------------------------------");
                 String[] parts = s.split(" ");
                 if (parts.length > 1) {
                     String ipAddress = parts[1];
-                    System.out.println("Open ports for " + ipAddress + ": " + getOpenPorts(ipAddress));
+                    System.out.println("Open ports for " + ipAddress);
+                    // ##
+                    try {
+                        InetAddress inetAddress = InetAddress.getByName(ipAddress);
+                        for (int port = 1; port <= 535; port++) {
+                            try (Socket socket = new Socket()) {
+                                socket.connect(new InetSocketAddress(inetAddress, port), 50);
+                                System.out.println("Open port: " + port);
+                            } catch (IOException e) {
+                                // Port is closed or unreachable
+                            }
+                        }
+                    } catch (UnknownHostException e) {
+                        System.out.println("Invalid IP address");
+                    }
+                    System.out.println("------------------------------------------------------------------");
+                    //##
+                    //System.out.println("Open ports for " + ipAddress + ": " + getOpenPorts(ipAddress));
                 }else {
+                    System.out.println("------------------------------------------------------------------");
                     System.out.println("Usage: listports <IPv4>");
+                    System.out.println("------------------------------------------------------------------");
                 }
             } else if (s.contains("!")) {
+                System.out.println("------------------------------------------------------------------");
             //String command = messagePart.substring(1);
-            int indexOfExclamation = messagePart.indexOf("!");
-            String command = messagePart.substring(indexOfExclamation + 1);
+                int indexOfExclamation = messagePart.indexOf("!");
+                String command = messagePart.substring(indexOfExclamation + 1);
                 System.out.println(command);
-            System.out.println("Command output: " + executeCommand(command));
+                System.out.println("Command output: " + executeCommand(command));
+                System.out.println("------------------------------------------------------------------");
             }else if(isPositiveInteger(messagePart)) {
-            int number = Integer.parseInt(messagePart);
-            System.out.println("Prime factors of " + number + ": " + getPrimeFactors(number));
+                System.out.println("------------------------------------------------------------------");
+                int number = Integer.parseInt(messagePart);
+                System.out.println("Prime factors of " + number + ": " + getPrimeFactors(number));
+                System.out.println("------------------------------------------------------------------");
             }else {
-            System.out.println("Invalid input. Usage: <number>|listifs|listports <IPv4>|!<command>|exit");
-        }
+                System.out.println("------------------------------------------------------------------");
+                System.out.println("Invalid input. Usage: <number>|listifs|listports <IPv4>|!<command>|exit");
+                System.out.println("------------------------------------------------------------------");
+            }
         }
         /*if (s.equalsIgnoreCase("exit")) {
             System.out.println("Goodbye!");
