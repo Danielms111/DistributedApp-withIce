@@ -28,15 +28,13 @@ class PrinterI implements Demo.Printer {
                                 socket.connect(new InetSocketAddress(inetAddress, port), 50);
                                 System.out.println("Open port: " + port);
                             } catch (IOException e) {
-                                // Port is closed or unreachable
+                                //cerrado
                             }
                         }
                     } catch (UnknownHostException e) {
                         System.out.println("Invalid IP address");
                     }
                     System.out.println("------------------------------------------------------------------");
-                    //##
-                    //System.out.println("Open ports for " + ipAddress + ": " + getOpenPorts(ipAddress));
                 }else {
                     System.out.println("------------------------------------------------------------------");
                     System.out.println("Usage: listports <IPv4>");
@@ -61,24 +59,6 @@ class PrinterI implements Demo.Printer {
                 System.out.println("------------------------------------------------------------------");
             }
         }
-        /*if (s.equalsIgnoreCase("exit")) {
-            System.out.println("Goodbye!");
-        } else if (s.endsWith("listifs")) {
-            System.out.println("List of interfaces: " + getNetworkInterfaces());
-        } else if (s.endsWith("listports")) {
-            String[] parts = s.split(" ");
-            if (parts.length > 1) {
-                String ipAddress = parts[1];
-                System.out.println("Open ports for " + ipAddress + ": " + getOpenPorts(ipAddress));
-            } else {
-                System.out.println("Usage: listports <IPv4>");
-            }
-        } else if (s.endsWith("!")) {
-            String command = s.substring(1);
-            System.out.println("Command output: " + executeCommand(command));
-        }else {
-            System.out.println("Invalid input. Usage: <number>|listifs|listports <IPv4>|!<command>|exit");
-        }*/
     }
 
     private String getNetworkInterfaces() {

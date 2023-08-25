@@ -22,7 +22,7 @@ public class Client {
                 
                 if (!message.equals("exit")) {
                     String formattedMessage = formatMessage(message);
-                    printer.printString(formattedMessage); // Sin asignar a una variable
+                    printer.printString(formattedMessage); 
                 }
             } while (!message.equals("exit"));
         }
@@ -30,7 +30,7 @@ public class Client {
     
     private static String formatMessage(String message) {
         String username = System.getProperty("user.name");
-        String hostname = "LAPTOP-IL6REUHO"; // You need to specify the actual hostname
+        String hostname = "LAPTOP-IL6REUHO";
         return username + ":" + hostname + ":" + message;
     }
 }
